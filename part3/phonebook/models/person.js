@@ -1,16 +1,17 @@
-const mongoose = require("mongoose");
+/* eslint-disable no-undef */
+const mongoose = require('mongoose');
 
 const url = process.env.MONGODB_URI;
 
-console.log("connecting to", url);
+console.log('connecting to', url);
 
 mongoose
   .connect(url)
-  .then((result) => {
-    console.log("connected to MongoDB");
+  .then(() => {
+    console.log('connected to MongoDB');
   })
   .catch((error) => {
-    console.log("error connecting to MongoDB", error.message);
+    console.log('error connecting to MongoDB', error.message);
   });
 
 const personSchema = new mongoose.Schema({
@@ -26,7 +27,7 @@ const personSchema = new mongoose.Schema({
   },
 });
 
-personSchema.set("toJSON", {
+personSchema.set('toJSON', {
   transform: (doc, returnedObj) => {
     returnedObj.id = returnedObj._id.toString();
     delete returnedObj._id;
@@ -34,6 +35,6 @@ personSchema.set("toJSON", {
   },
 });
 
-const Person = mongoose.model("Person", personSchema);
+const Person = mongoose.model('Person', personSchema);
 
 module.exports = Person;

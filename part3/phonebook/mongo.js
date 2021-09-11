@@ -1,10 +1,11 @@
-const mongoose = require("mongoose");
+/* eslint-disable no-undef */
+const mongoose = require('mongoose');
 
 const [, , password, name, number] = process.argv;
 
 if (!password) {
   console.log(
-    "Please provide the password as an argument: node mongo.js <password>"
+    'Please provide the password as an argument: node mongo.js <password>'
   );
   process.exit(1);
 }
@@ -17,7 +18,7 @@ const personSchema = new mongoose.Schema({
   number: String,
 });
 
-const Person = mongoose.model("Person", personSchema);
+const Person = mongoose.model('Person', personSchema);
 
 const person = new Person({
   name,
@@ -26,14 +27,14 @@ const person = new Person({
 
 if (!(name && number)) {
   Person.find({}).then((result) => {
-    console.log("phonebook:");
+    console.log('phonebook:');
     result.forEach((each) => {
       console.log(`${each.name} ${each.number}`);
     });
     mongoose.connection.close();
   });
 } else if (!name || !number) {
-  console.log("name or number missing");
+  console.log('name or number missing');
   exit(1);
 } else if (name && number) {
   person.save().then((result) => {
