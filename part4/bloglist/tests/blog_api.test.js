@@ -128,6 +128,21 @@ describe('addition of a new blog', () => {
     const blogs = [blogWithoutTitle, blogWithoutURL, blogWithoutTitleAndURL];
     await Promise.all(blogs.map(async (each) => await api.post('/api/blogs').set('Authorization', authorizationToken).send(each).expect(400)));
   });
+
+  test('fail with status code 401 if user is invalid', async () => {
+    const newBlog = {
+      title: 'Andrew 1',
+      author: 'Andrew',
+      url: 'Andrew',
+      likes: 2,
+    };
+
+    await api
+      .post('/api/blogs')
+      .set('Authorization', '')
+      .send(newBlog)
+      .expect(401);
+  });
 });
 
 describe('deletion of a blog', () => {
@@ -158,6 +173,7 @@ describe('update of a blog', () => {
   test('fail with status code 400 if id is invalid', async () => {
     await api.put('/api/blogs/tempId').set('Authorization', authorizationToken).expect(400);
   });
+
 });
 
 afterAll(() => {
